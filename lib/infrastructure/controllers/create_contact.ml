@@ -10,7 +10,7 @@ let post request =
           request
           { Dom.Contact.id = None; email; first; last; phone })
       (fun _contact ->
-        Dream.add_flash_message request "Info" "Contact created!";
+        Dream.add_flash_message request "Success" "Contact created!";
         Dream.redirect request "/contacts")
       (fun exc ->
         let messages = [ "Warn", Printexc.to_string_default exc ] in

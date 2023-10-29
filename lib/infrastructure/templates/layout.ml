@@ -23,7 +23,16 @@ let render ?(messages = []) request contents =
       html
         (head
            (title (txt "Contact app"))
-           [ link ~rel:[ `Stylesheet ] ~href:"https://unpkg.com/missing.css@1.1.1" () ])
+           [ link ~rel:[ `Stylesheet ] ~href:"https://unpkg.com/missing.css@1.1.1" ()
+           ; script
+               ~a:
+                 [ a_src "https://unpkg.com/htmx.org@1.9.2"
+                 ; a_integrity
+                     "sha384-L6OqL9pRWyyFU3+/bjdSri+iIphTN/bvYyM37tICVyOJkWZLpP2vGn6VUEXgzg6h"
+                 ; a_crossorigin `Anonymous
+                 ]
+               (txt "")
+           ])
         (body
            [ main
                ([ header

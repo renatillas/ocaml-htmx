@@ -1,26 +1,20 @@
 (lang dune 3.10)
 
-(name web1_0)
+(name ocaml-htmx)
 
 (generate_opam_files true)
 
 (source
- (github username/reponame))
+ (github renatillas/ocaml-htmx))
 
-(authors "Author Name")
+(authors "Renatillas")
 
-(maintainers "Maintainer Name")
-
-(license LICENSE)
-
-(documentation https://url/to/documentation)
+(maintainers "Renatillas")
 
 (package
- (name web1_0)
- (synopsis "A short synopsis")
- (description "A longer description")
+ (name ocaml-htmx)
+ (synopsis "Just a web app following the htmx book tutorial")
  (depends ocaml dune)
- (tags
-  (topics "to describe" your project)))
+ )
 
 ; See the complete stanza docs at https://dune.readthedocs.io/en/stable/dune-files.html#dune-project

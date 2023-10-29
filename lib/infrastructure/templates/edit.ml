@@ -1,6 +1,11 @@
 open Base
 
-let render ?(messages = []) (contact : Models.Contact.t) request =
+let render
+  ?(messages = [])
+  ?(errors : Validators.Contact_validator.t option)
+  ~(contact : Models.Contact.t)
+  request
+  =
   let contact_id = Option.value_exn contact.id in
   let open Tyxml.Html in
   let component =
@@ -20,6 +25,9 @@ let render ?(messages = []) (contact : Models.Contact.t) request =
                       ; a_value contact.email
                       ]
                     ()
+                ; span
+                    ~a:[ a_class [ "color"; "bad" ] ]
+                    [ txt Option.(value ~default:"" (errors >>= fun err -> err.email)) ]
                 ]
             ; p
                 [ label ~a:[ a_label_for "first_name" ] [ txt "First Name" ]
@@ -32,6 +40,9 @@ let render ?(messages = []) (contact : Models.Contact.t) request =
                       ; a_value contact.first
                       ]
                     ()
+                ; span
+                    ~a:[ a_class [ "color"; "bad" ] ]
+                    [ txt Option.(value ~default:"" (errors >>= fun err -> err.first)) ]
                 ]
             ; p
                 [ label ~a:[ a_label_for "last_name" ] [ txt "Last Name" ]
@@ -44,6 +55,9 @@ let render ?(messages = []) (contact : Models.Contact.t) request =
                       ; a_value contact.last
                       ]
                     ()
+                ; span
+                    ~a:[ a_class [ "color"; "bad" ] ]
+                    [ txt Option.(value ~default:"" (errors >>= fun err -> err.last)) ]
                 ]
             ; p
                 [ label ~a:[ a_label_for "phone" ] [ txt "Phone" ]
@@ -56,6 +70,9 @@ let render ?(messages = []) (contact : Models.Contact.t) request =
                       ; a_value contact.phone
                       ]
                     ()
+                ; span
+                    ~a:[ a_class [ "color"; "bad" ] ]
+                    [ txt Option.(value ~default:"" (errors >>= fun err -> err.phone)) ]
                 ]
             ; button [ txt "Save" ]
             ]

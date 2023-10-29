@@ -1,5 +1,5 @@
 (library
  (name controllers)
- (libraries base dream repositories templates)
+ (libraries base dream repositories validators templates)
  (preprocess
   (pps lwt_ppx)))

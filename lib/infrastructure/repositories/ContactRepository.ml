@@ -25,7 +25,7 @@ module Query = struct
   ;;
 
   let find_by_id =
-    Caqti_type.(string ->! contact_type)
+    Caqti_type.(int ->! contact_type)
       {|SELECT id, email, first, last, phone 
         FROM contact
         WHERE id = $1|}

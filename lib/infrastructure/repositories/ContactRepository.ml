@@ -31,6 +31,13 @@ module Query = struct
         WHERE id = $1|}
   ;;
 
+  let find_by_email =
+    Caqti_type.(string ->! contact_type)
+      {|SELECT id, email, first, last, phone 
+        FROM contact
+        WHERE email = $1|}
+  ;;
+
   let save =
     Caqti_type.(tup4 string string string string ->! contact_type)
       {|INSERT INTO contact (email, first, last, phone)
@@ -55,16 +62,21 @@ module Query = struct
   ;;
 end
 
-let save request contact =
+let save request (contact : Dom.Contact.t) =
   let save (module DbConnection : Caqti_lwt.CONNECTION) =
-    let* new_contact =
-      DbConnection.find
-        Query.save
-        (contact.Dom.Contact.email, contact.first, contact.last, contact.phone)
-    in
-    let* new_contact = Caqti_lwt.or_fail new_contact in
-    let id, (email, first, last, phone) = new_contact in
-    Lwt.return { Dom.Contact.id = Some id; email; first; last; phone }
+    DbConnection.with_transaction (fun () ->
+      let* existing_contact = DbConnection.find_opt Query.find_by_email contact.email in
+      match%lwt Caqti_lwt.or_fail existing_contact with
+      | Some _ -> raise (failwith "There's another Contact with the same email.")
+      | None ->
+        let* new_contact =
+          DbConnection.find
+            Query.save
+            (contact.email, contact.first, contact.last, contact.phone)
+        in
+        let* new_contact = Caqti_lwt.or_fail new_contact in
+        let id, (email, first, last, phone) = new_contact in
+        Lwt.return_ok { Dom.Contact.id = Some id; email; first; last; phone })
   in
   Dream.sql request save
 ;;

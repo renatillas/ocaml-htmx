@@ -9,15 +9,11 @@ let post request =
         Repositories.ContactRepository.save
           request
           { Dom.Contact.id = None; email; first; last; phone })
-      (fun _ ->
+      (fun _contact ->
         Dream.add_flash_message request "Info" "Contact created!";
         Dream.redirect request "/contacts")
-      (fun _ ->
-        let messages =
-          [ ( "Warn"
-            , "Contact could not be created. There's another contact with that email." )
-          ]
-        in
+      (fun exc ->
+        let messages = [ "Warn", Printexc.to_string_default exc ] in
         Templates.New.render ~messages ~email ~first ~last ~phone request |> Dream.html)
   | _ ->
     Dream.add_flash_message request "Error" "There was an error with your form.";

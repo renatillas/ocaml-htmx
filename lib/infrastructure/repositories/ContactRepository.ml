@@ -144,3 +144,15 @@ let delete_by_id request ~id =
   in
   Dream.sql request delete_by_id
 ;;
+
+let find_by_email request ~email =
+  let find_by_email (module DbConnection : Caqti_lwt.CONNECTION) =
+    let* raw_contact = DbConnection.find_opt Query.find_by_email email in
+    match%lwt Caqti_lwt.or_fail raw_contact with
+    | None -> Lwt.return None
+    | Some (id, (email, first, last, phone)) ->
+      let contact : Models.Contact.t = { id = Some id; email; first; last; phone } in
+      Lwt.return (Some contact)
+  in
+  Dream.sql request find_by_email
+;;

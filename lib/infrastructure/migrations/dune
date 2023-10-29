@@ -1,0 +1,3 @@
+(library
+ (name init)
+ (libraries lwt caqti caqti-lwt lwt.unix caqti-driver-sqlite3))

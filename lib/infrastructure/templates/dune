@@ -1,0 +1,3 @@
+(library
+ (name templates)
+ (libraries base dream dom tyxml))

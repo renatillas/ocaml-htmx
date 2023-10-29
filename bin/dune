@@ -1,0 +1,5 @@
+(executables
+ (names app create_tables delete_tables)
+ (public_names app create_tables delete_tables)
+ (libraries dream controllers caqti-driver-sqlite3 init)
+)

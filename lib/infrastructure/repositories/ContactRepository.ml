@@ -106,7 +106,7 @@ let ls request =
       List.fold
         ~init:(Set.empty (module Dom.Contact))
         ~f:(fun acc (id, (email, first, last, phone)) ->
-          Set.add acc { Dom.Contact.id = Some id; email; first; last; phone })
+          Set.add acc { id = Some id; email; first; last; phone })
         raw_contacts
     in
     Lwt.return contacts
@@ -118,7 +118,7 @@ let find_by_id request ~id =
   let find_by_id (module DbConnection : Caqti_lwt.CONNECTION) =
     let* raw_contact = DbConnection.find Query.find_by_id id in
     let* id, (email, first, last, phone) = Caqti_lwt.or_fail raw_contact in
-    let contact = { Dom.Contact.id = Some id; email; first; last; phone } in
+    let contact : Dom.Contact.t = { id = Some id; email; first; last; phone } in
     Lwt.return contact
   in
   Dream.sql request find_by_id

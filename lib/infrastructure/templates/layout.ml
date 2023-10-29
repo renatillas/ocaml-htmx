@@ -34,6 +34,7 @@ let render ?(messages = []) request contents =
                (txt "")
            ])
         (body
+           ~a:[ Unsafe.string_attrib "hx-boost" "true" ]
            [ main
                ([ header
                     [ h1 ~a:[ a_class [ "allcaps" ] ] [ txt "contacts.app" ]

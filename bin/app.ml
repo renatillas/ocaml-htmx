@@ -10,8 +10,8 @@ let () =
        ; Dream.get "/contacts/new" @@ Controllers.Create_contact.get
        ; Dream.post "/contacts/new" @@ Controllers.Create_contact.post
        ; Dream.get "/contacts/:id" @@ Controllers.View_contact.get
+       ; Dream.delete "/contacts/:id" @@ Controllers.Delete_contact.delete
        ; Dream.get "/contacts/:id/edit" @@ Controllers.Edit_contact.get
        ; Dream.post "/contacts/:id/edit" @@ Controllers.Edit_contact.post
-       ; Dream.post "/contacts/:id/delete" @@ Controllers.Delete_contact.post
        ]
 ;;

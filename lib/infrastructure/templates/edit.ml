@@ -77,13 +77,17 @@ let render
             ; button [ txt "Save" ]
             ]
         ]
-    ; form
-        ~a:[ a_action @@ Printf.sprintf "/contacts/%i/delete" contact_id; a_method `Post ]
-        [ Unsafe.data (Dream.csrf_tag request)
-          (* This is necessary for dream's csrf things *)
-        ; button [ txt "Delete contact" ]
-        ]
-    ; p [ a ~a:[ a_href @@ Printf.sprintf "/contacts/%i" contact_id ] [ txt "Back" ] ]
+    ; button
+        ~a:
+          [ Unsafe.string_attrib "hx-delete" (Printf.sprintf "/contacts/%i" contact_id)
+          ; Unsafe.string_attrib "hx-target" "body"
+          ; Unsafe.string_attrib "hx-push-url" "true"
+          ; Unsafe.string_attrib
+              "hx-confirm"
+              "Are you sure you want to delete this contact?"
+          ]
+        [ txt "Delete contact" ]
+    ; p [ a ~a:[ a_href (Printf.sprintf "/contacts/%i" contact_id) ] [ txt "Back" ] ]
     ]
   in
   Layout.render ~messages request component

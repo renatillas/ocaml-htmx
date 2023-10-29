@@ -2,7 +2,7 @@ let () =
   Dream.run ~adjust_terminal:false ~greeting:false
   @@ Dream.logger
   @@ Dream.flash
-  @@ Dream.sql_pool "sqlite3:db/db.sqlite"
+  @@ Dream.sql_pool "sqlite3:/var/lib/ocaml-htmx/db.sqlite"
   @@ Dream.sql_sessions
   @@ Dream.router
        [ Dream.get "/" @@ Controllers.Redirect_contacts.get

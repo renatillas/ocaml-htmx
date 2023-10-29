@@ -1,6 +1,6 @@
 open Base
 
-let render ?(messages = []) (contact : Dom.Contact.t) request =
+let render ?(messages = []) (contact : Models.Contact.t) request =
   let contact_id = Option.value_exn contact.id in
   let open Tyxml.Html in
   let component =
@@ -17,7 +17,7 @@ let render ?(messages = []) (contact : Dom.Contact.t) request =
                       ; a_id "email"
                       ; a_input_type `Email
                       ; a_placeholder "Email"
-                      ; a_value contact.Dom.Contact.email
+                      ; a_value contact.email
                       ]
                     ()
                 ]

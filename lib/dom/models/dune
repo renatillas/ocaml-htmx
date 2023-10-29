@@ -1,5 +1,5 @@
 (library
- (name dom)
+ (name models)
  (libraries base)
  (preprocess
   (pps lwt_ppx)))

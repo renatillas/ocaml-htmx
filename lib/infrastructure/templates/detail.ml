@@ -1,9 +1,9 @@
 open Base
 
-let render contact request =
+let render (contact : Models.Contact.t) request =
   let open Tyxml.Html in
   let component =
-    [ h1 [ txt (Printf.sprintf "%s %s" contact.Dom.Contact.first contact.last) ]
+    [ h1 [ txt (Printf.sprintf "%s %s" contact.first contact.last) ]
     ; div
         [ div [ txt @@ Printf.sprintf "Phone: %s" contact.phone ]
         ; div [ txt @@ Printf.sprintf "Email: %s" contact.email ]

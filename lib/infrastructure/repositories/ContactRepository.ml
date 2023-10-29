@@ -62,7 +62,7 @@ module Query = struct
   ;;
 end
 
-let save request (contact : Dom.Contact.t) =
+let save request ~(contact : Models.Contact.t) =
   let save (module DbConnection : Caqti_lwt.CONNECTION) =
     DbConnection.with_transaction (fun () ->
       let* existing_contact = DbConnection.find_opt Query.find_by_email contact.email in
@@ -76,7 +76,7 @@ let save request (contact : Dom.Contact.t) =
         in
         let* new_contact = Caqti_lwt.or_fail new_contact in
         let id, (email, first, last, phone) = new_contact in
-        Lwt.return_ok { Dom.Contact.id = Some id; email; first; last; phone })
+        Lwt.return_ok { Models.Contact.id = Some id; email; first; last; phone })
   in
   Dream.sql request save
 ;;
@@ -88,9 +88,9 @@ let find_like request ~filter =
     let* raw_contacts = Caqti_lwt.or_fail raw_contacts in
     let contacts =
       List.fold
-        ~init:(Set.empty (module Dom.Contact))
+        ~init:(Set.empty (module Models.Contact))
         ~f:(fun acc (id, (email, first, last, phone)) ->
-          Set.add acc { Dom.Contact.id = Some id; email; first; last; phone })
+          Set.add acc { Models.Contact.id = Some id; email; first; last; phone })
         raw_contacts
     in
     Lwt.return contacts
@@ -104,7 +104,7 @@ let ls request =
     let* raw_contacts = Caqti_lwt.or_fail raw_contacts in
     let contacts =
       List.fold
-        ~init:(Set.empty (module Dom.Contact))
+        ~init:(Set.empty (module Models.Contact))
         ~f:(fun acc (id, (email, first, last, phone)) ->
           Set.add acc { id = Some id; email; first; last; phone })
         raw_contacts
@@ -118,13 +118,13 @@ let find_by_id request ~id =
   let find_by_id (module DbConnection : Caqti_lwt.CONNECTION) =
     let* raw_contact = DbConnection.find Query.find_by_id id in
     let* id, (email, first, last, phone) = Caqti_lwt.or_fail raw_contact in
-    let contact : Dom.Contact.t = { id = Some id; email; first; last; phone } in
+    let contact : Models.Contact.t = { id = Some id; email; first; last; phone } in
     Lwt.return contact
   in
   Dream.sql request find_by_id
 ;;
 
-let update request ~(contact : Dom.Contact.t) =
+let update request ~(contact : Models.Contact.t) =
   let update (module DbConnection : Caqti_lwt.CONNECTION) =
     let* query_result =
       DbConnection.exec

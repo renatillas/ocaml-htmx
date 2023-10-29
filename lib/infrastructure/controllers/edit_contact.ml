@@ -29,7 +29,7 @@ let post request =
           ]
         in
         let contact_with_errors =
-          { Dom.Contact.id = Some (Int.of_string path_param_id)
+          { Models.Contact.id = Some (Int.of_string path_param_id)
           ; email
           ; first
           ; last

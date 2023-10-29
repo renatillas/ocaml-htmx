@@ -1,5 +1,5 @@
 (library
  (name repositories)
- (libraries base dream dom caqti-driver-sqlite3)
+ (libraries base dream models caqti-driver-sqlite3)
  (preprocess
   (pps lwt_ppx)))

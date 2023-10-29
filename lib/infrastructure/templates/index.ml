@@ -18,7 +18,7 @@ let render default contacts request =
         ; input ~a:[ a_input_type `Submit; a_value "Search" ] ()
         ]
     in
-    let row_contact (contact : Dom.Contact.t) =
+    let row_contact (contact : Models.Contact.t) =
       tr
         [ td [ txt contact.first ]
         ; td [ txt contact.last ]

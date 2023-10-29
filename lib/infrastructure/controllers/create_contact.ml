@@ -8,7 +8,7 @@ let post request =
       (fun () ->
         Repositories.ContactRepository.save
           request
-          { Dom.Contact.id = None; email; first; last; phone })
+          ~contact:{ Models.Contact.id = None; email; first; last; phone })
       (fun _contact ->
         Dream.add_flash_message request "Success" "Contact created!";
         Dream.redirect request "/contacts")

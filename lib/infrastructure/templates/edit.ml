@@ -23,10 +23,15 @@ let render
                       ; a_input_type `Email
                       ; a_placeholder "Email"
                       ; a_value contact.email
+                      ; Unsafe.string_attrib
+                          "hx-get"
+                          (Printf.sprintf "/contacts/%i/email" contact_id)
+                      ; Unsafe.string_attrib "hx-target" "next .error"
+                      ; Unsafe.string_attrib "hx-trigger" "change, keyup"
                       ]
                     ()
                 ; span
-                    ~a:[ a_class [ "color"; "bad" ] ]
+                    ~a:[ a_class [ "error"; "color"; "bad" ] ]
                     [ txt Option.(value ~default:"" (errors >>= fun err -> err.email)) ]
                 ]
             ; p

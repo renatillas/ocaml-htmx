@@ -13,5 +13,6 @@ let () =
        ; Dream.delete "/contacts/:id" Controllers.Delete_contact.delete
        ; Dream.get "/contacts/:id/edit" Controllers.Edit_contact.get
        ; Dream.post "/contacts/:id/edit" Controllers.Edit_contact.post
+       ; Dream.get "/contacts/:id/email" Controllers.View_email.get
        ]
 ;;

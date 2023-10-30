@@ -27,7 +27,7 @@ let render
                           "hx-get"
                           (Printf.sprintf "/contacts/%i/email" contact_id)
                       ; Unsafe.string_attrib "hx-target" "next .error"
-                      ; Unsafe.string_attrib "hx-trigger" "change, keyup"
+                      ; Unsafe.string_attrib "hx-trigger" "change, keyup delay:200ms"
                       ]
                     ()
                 ; span
